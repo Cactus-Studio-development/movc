@@ -1,0 +1,483 @@
+.page {
+  --ios-glass: rgba(255, 255, 255, 0.14);
+  --ios-border: rgba(255, 255, 255, 0.3);
+  --hbo-violet: #7c3aed;
+  --hbo-indigo: #312e81;
+  --hbo-blue: #2563eb;
+  --surface: rgba(10, 12, 28, 0.7);
+  --text: #eef2ff;
+  --muted: #c7d2fe;
+  min-height: 100vh;
+  color: var(--text);
+  background:
+    radial-gradient(circle at 15% 10%, rgba(37, 99, 235, 0.4), transparent 35%),
+    radial-gradient(circle at 85% 5%, rgba(124, 58, 237, 0.35), transparent 38%),
+    linear-gradient(140deg, #050816 0%, #10042f 48%, #0a0920 100%);
+}
+
+.page[data-theme="light"] {
+  --surface: rgba(255, 255, 255, 0.7);
+  --text: #111827;
+  --muted: #334155;
+  background:
+    radial-gradient(circle at 10% 10%, rgba(147, 197, 253, 0.7), transparent 35%),
+    radial-gradient(circle at 85% 5%, rgba(196, 181, 253, 0.65), transparent 38%),
+    linear-gradient(145deg, #f8fafc 0%, #eef2ff 45%, #e0e7ff 100%);
+}
+
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  margin: 0 auto;
+  width: min(1180px, 94%);
+  margin-top: 0.9rem;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--ios-border);
+  border-radius: 16px;
+  background: var(--ios-glass);
+  backdrop-filter: blur(14px) saturate(130%);
+  box-shadow: 0 16px 40px rgba(2, 6, 23, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.logo {
+  font-size: 1.02rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.brandGroup {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.navMenu {
+  display: none;
+  gap: 0.5rem;
+}
+
+.navLink {
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.45rem 0.75rem;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.navLink:hover {
+  background: rgba(124, 58, 237, 0.18);
+  border-color: rgba(124, 58, 237, 0.4);
+  transform: translateY(-1px);
+}
+
+.themeButton {
+  border: 1px solid var(--ios-border);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+  color: inherit;
+  padding: 0.45rem 0.78rem;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.main {
+  width: min(1180px, 94%);
+  margin: 1.2rem auto 0;
+  padding-bottom: 2.4rem;
+}
+
+.presentationSection {
+  margin-top: 1rem;
+  border: 1px solid var(--ios-border);
+  border-radius: 22px;
+  overflow: hidden;
+  background: var(--ios-glass);
+  backdrop-filter: blur(14px);
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: start;
+}
+
+.imageTrigger {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  width: 100%;
+  display: block;
+  overflow: hidden;
+  cursor: zoom-in;
+}
+
+.presentationImage {
+  width: 100%;
+  height: auto;
+  max-height: 250px;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  transition:
+    transform 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.presentationContent {
+  padding: 1rem 1.1rem 1.2rem;
+}
+
+.presentationContent h2 {
+  margin: 0.55rem 0 0.35rem;
+}
+
+.presentationContent p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.hero {
+  margin-top: 1rem;
+  border: 1px solid var(--ios-border);
+  border-radius: 22px;
+  padding: 1.2rem;
+  background: var(--ios-glass);
+  backdrop-filter: blur(18px);
+}
+
+.badge {
+  margin: 0;
+  display: inline-block;
+  padding: 0.25rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--hbo-blue), var(--hbo-violet));
+  color: #f8fafc;
+}
+
+.hero h1 {
+  margin: 0.55rem 0 0.35rem;
+  font-size: clamp(1.6rem, 4vw, 2.5rem);
+}
+
+.hero p {
+  margin: 0;
+  color: var(--muted);
+  max-width: 70ch;
+}
+
+.featuredBoard {
+  margin-top: 1rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  overflow: hidden;
+  border-radius: 24px;
+  border: 1px solid var(--ios-border);
+  background:
+    linear-gradient(135deg, rgba(37, 99, 235, 0.18), transparent 45%),
+    linear-gradient(315deg, rgba(124, 58, 237, 0.2), transparent 40%),
+    var(--surface);
+  box-shadow: 0 22px 44px rgba(2, 6, 23, 0.4);
+}
+
+.featuredContent {
+  padding: 1.2rem;
+}
+
+.featuredLabel {
+  margin: 0;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #a5b4fc;
+}
+
+.featuredContent h2 {
+  margin: 0.4rem 0 0.5rem;
+  font-size: clamp(1.35rem, 3vw, 2rem);
+}
+
+.featuredContent p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.featuredMeta {
+  margin: 0.95rem 0 1.15rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+.featuredMeta span {
+  border: 1px solid var(--ios-border);
+  border-radius: 999px;
+  padding: 0.28rem 0.62rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.primaryButton {
+  border: 0;
+  border-radius: 12px;
+  padding: 0.72rem 1rem;
+  font-weight: 700;
+  color: #f8fafc;
+  background: linear-gradient(135deg, var(--hbo-blue), var(--hbo-violet));
+  box-shadow: 0 12px 28px rgba(37, 99, 235, 0.38);
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.primaryButton:hover {
+  transform: translateY(-2px);
+}
+
+.featuredImage {
+  width: 100%;
+  height: 240px;
+  object-fit: cover;
+  transition:
+    transform 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.presentationSection .imageTrigger:hover .presentationImage {
+  object-fit: contain;
+  transform: scale(0.975);
+  filter: saturate(1.06) contrast(1.05);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.22);
+  background: rgba(2, 6, 23, 0.45);
+}
+
+.featuredBoard .imageTrigger:hover .featuredImage {
+  object-fit: contain;
+  transform: scale(0.975);
+  filter: saturate(1.06) contrast(1.05);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.22);
+  background: rgba(2, 6, 23, 0.45);
+}
+
+.sponsorSection {
+  margin-top: 1rem;
+  border-radius: 16px;
+  border: 1px solid var(--ios-border);
+  padding: 1rem 1.1rem;
+  background: var(--ios-glass);
+  backdrop-filter: blur(12px);
+}
+
+.sponsorSection h3 {
+  margin: 0 0 0.4rem;
+}
+
+.sponsorSection p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.storeBadges {
+  margin-top: 0.8rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+.storeBadge {
+  height: 44px;
+  width: auto;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: rgba(2, 6, 23, 0.4);
+  padding: 0.2rem 0.35rem;
+}
+
+.carouselSection {
+  margin-top: 1rem;
+  border-radius: 16px;
+  border: 1px solid var(--ios-border);
+  padding: 1rem 1.1rem;
+  background: var(--ios-glass);
+  backdrop-filter: blur(12px);
+}
+
+.carouselSection h3 {
+  margin: 0 0 0.8rem;
+}
+
+.carouselViewport {
+  overflow: hidden;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.06);
+  padding: 0.6rem;
+}
+
+.carouselRail {
+  display: flex;
+  gap: 0.6rem;
+  width: max-content;
+  animation: carouselLoop 24s linear infinite;
+}
+
+.carouselRail:hover {
+  animation-play-state: paused;
+}
+
+.carouselItem {
+  width: min(72vw, 430px);
+  height: min(42vw, 240px);
+  min-height: 150px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  flex: 0 0 auto;
+  cursor: zoom-in;
+}
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  background: rgba(2, 6, 23, 0.78);
+  backdrop-filter: blur(4px);
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+}
+
+.lightboxContent {
+  width: min(1100px, 96vw);
+}
+
+.lightboxClose {
+  display: inline-block;
+  margin-bottom: 0.55rem;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  color: #f8fafc;
+  font-weight: 700;
+  padding: 0.38rem 0.75rem;
+  cursor: pointer;
+}
+
+.lightboxImage {
+  width: 100%;
+  max-height: 82vh;
+  object-fit: contain;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+}
+
+.infoSection {
+  margin-top: 1rem;
+  border-radius: 16px;
+  border: 1px solid var(--ios-border);
+  padding: 1rem 1.1rem;
+  background: var(--ios-glass);
+  backdrop-filter: blur(12px);
+}
+
+.infoSection h3 {
+  margin: 0 0 0.35rem;
+}
+
+.infoSection p {
+  margin: 0.2rem 0;
+  color: var(--muted);
+}
+
+.contactActions {
+  margin-top: 0.85rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+.contactButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  border-radius: 11px;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--ios-border);
+  text-decoration: none;
+  color: inherit;
+  font-weight: 700;
+  font-size: 0.85rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.contactButton:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 22px rgba(2, 6, 23, 0.25);
+}
+
+.contactIcon {
+  width: 16px;
+  height: 16px;
+  flex: 0 0 auto;
+}
+
+.whatsappButton {
+  background: linear-gradient(135deg, #15803d, #22c55e);
+  color: #f8fafc;
+}
+
+.gmailButton {
+  background: linear-gradient(135deg, #7c2d12, #ea580c);
+  color: #f8fafc;
+}
+
+@media (min-width: 780px) {
+  .navMenu {
+    display: flex;
+  }
+
+  .featuredBoard {
+    grid-template-columns: 1.05fr 0.95fr;
+    align-items: stretch;
+  }
+
+  .presentationSection {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .presentationImage {
+    max-height: 100%;
+    min-height: 0;
+  }
+
+  .featuredImage {
+    height: 100%;
+    min-height: 320px;
+  }
+
+  .carouselItem {
+    width: min(36vw, 420px);
+    height: min(22vw, 240px);
+  }
+}
+
+@keyframes carouselLoop {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
