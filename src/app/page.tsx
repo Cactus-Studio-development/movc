@@ -90,6 +90,11 @@ export default function Home() {
 
   return (
     <div data-theme={darkMode ? "dark" : "light"} className={styles.page}>
+      <div className={styles.pageBackground} aria-hidden="true">
+        <div className={styles.pageBackgroundImage} />
+        <div className={styles.pageBackgroundOverlay} />
+        <div className={styles.pageBackgroundGrain} />
+      </div>
       <header className={styles.navbar}>
         <div className={styles.brandGroup}>
           <div className={styles.logo}>MOVC Cines</div>
@@ -170,14 +175,18 @@ export default function Home() {
 
         <section className={styles.featuredBoard}>
           <div className={styles.featuredContent}>
+            <div className={styles.featuredBadges}>
+              <span className={styles.featuredEpisodeBadge}>Episodio 1</span>
+              <span className={styles.featuredStatusBadge}>En cartelera</span>
+            </div>
             <p className={styles.featuredLabel}>{featuredSeries.launch}</p>
-            <h2>{featuredSeries.title} - Episodio 1: Piloto</h2>
-            <p>{featuredSeries.synopsis}</p>
+            <h2>{featuredSeries.title}</h2>
+            <p className={styles.featuredSubtitle}>Piloto</p>
+            <p className={styles.featuredSynopsis}>{featuredSeries.synopsis}</p>
             <div className={styles.featuredMeta}>
               <span>{featuredSeries.genre}</span>
               <span>{featuredSeries.duration}</span>
               <span>{featuredSeries.rating}</span>
-              <span>Estado: En cartelera</span>
             </div>
             <button
               type="button"
@@ -193,35 +202,58 @@ export default function Home() {
               Ver detalle del piloto
             </button>
           </div>
-          <button
-            type="button"
-            className={styles.imageTrigger}
-            onMouseEnter={() =>
-              showImageHoverToast(
-                "piloto",
-                "Episodio 1: Piloto",
-                "Póster principal de cartelera. Haz click para ampliar.",
-              )
-            }
-            onMouseLeave={() => setLastHoverToast("")}
-            onClick={() =>
-              setPreviewImage({
-                src: featuredSeries.poster,
-                alt: "Póster del episodio 1: Piloto",
-              })
-            }
-          >
-            <img
-              src={featuredSeries.poster}
-              alt="Póster del episodio 1: Piloto"
-              className={styles.featuredImage}
-            />
-          </button>
+          <div className={styles.featuredImageWrap}>
+            <button
+              type="button"
+              className={styles.imageTrigger}
+              onMouseEnter={() =>
+                showImageHoverToast(
+                  "piloto",
+                  "Episodio 1: Piloto",
+                  "Póster principal de cartelera. Haz click para ampliar.",
+                )
+              }
+              onMouseLeave={() => setLastHoverToast("")}
+              onClick={() =>
+                setPreviewImage({
+                  src: featuredSeries.poster,
+                  alt: "Póster del episodio 1: Piloto",
+                })
+              }
+            >
+              <img
+                src={featuredSeries.poster}
+                alt="Póster del episodio 1: Piloto"
+                className={styles.featuredImage}
+              />
+            </button>
+          </div>
         </section>
 
         <section className={styles.sponsorSection}>
-          <h3>Patrocinio Osisg</h3>
-          <p>Pronto disponible para App Store y Play Store.</p>
+          <h3>
+            <a
+              href="https://dev.osisg.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.sponsorLink}
+            >
+              Patrocinado por Osisg
+            </a>
+          </h3>
+          <p>
+            Pronto disponible para App Store y Play Store. Conocé a nuestro
+            patrocinador:{" "}
+            <a
+              href="https://dev.osisg.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.sponsorLink}
+            >
+              Osisg
+            </a>
+            .
+          </p>
           <div className={styles.storeBadges}>
             <img
               src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg"
