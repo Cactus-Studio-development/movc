@@ -7,7 +7,6 @@ Cartelera de películas y series. Next.js 16, React 19, Tailwind 4, TypeScript.
 ```bash
 npm run dev
 ```
-
 Abrí [http://localhost:3000](http://localhost:3000) en el navegador.
 
 ## Secciones de la página
