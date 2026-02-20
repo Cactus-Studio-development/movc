@@ -142,6 +142,7 @@ export default function Home() {
   const [pageReady, setPageReady] = useState(false);
   const [lottieData, setLottieData] = useState<object | null>(null);
   const [entranceLeaving, setEntranceLeaving] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const entranceTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const finishEntrance = useCallback(() => {
@@ -186,6 +187,15 @@ export default function Home() {
     else window.addEventListener("load", onLoad);
     return () => window.removeEventListener("load", onLoad);
   }, []);
+
+  useEffect(() => {
+    if (!sidebarOpen) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setSidebarOpen(false);
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [sidebarOpen]);
 
   const setTheme = (isDark: boolean) => {
     setDarkMode(isDark);
@@ -245,13 +255,26 @@ export default function Home() {
           </Link>
           <button
             type="button"
-            className={styles.themeButton}
+            className={`${styles.themeButton} ${styles.themeButtonNav}`}
             onClick={() => setTheme(!darkMode)}
+            aria-label="Cambiar tema"
           >
             {darkMode ? "Modo oscuro" : "Modo claro"}
           </button>
         </div>
-        <div className={styles.navMenu} role="navigation" aria-label="Menú principal">
+        <div className={styles.navRight}>
+          <button
+            type="button"
+            className={styles.navMenuButton}
+            onClick={() => setSidebarOpen(true)}
+            aria-label="Abrir menú"
+            aria-expanded={sidebarOpen}
+          >
+            <span className={styles.navMenuIcon} aria-hidden="true" />
+            <span className={styles.navMenuIcon} aria-hidden="true" />
+            <span className={styles.navMenuIcon} aria-hidden="true" />
+          </button>
+          <div className={styles.navMenu} role="navigation" aria-label="Menú principal">
           {navItems.map((item) =>
             "href" in item && item.href ? (
               <Link
@@ -281,8 +304,82 @@ export default function Home() {
               </button>
             )
           )}
+          </div>
         </div>
       </nav>
+
+      {sidebarOpen && (
+        <>
+          <div
+            className={styles.sidebarOverlay}
+            onClick={() => setSidebarOpen(false)}
+            role="presentation"
+            aria-hidden="true"
+          />
+          <aside
+            className={styles.sidebar}
+            aria-label="Menú de navegación"
+            role="dialog"
+            aria-modal="true"
+          >
+            <div className={styles.sidebarHeader}>
+              <span className={styles.sidebarTitle}>Menú</span>
+              <button
+                type="button"
+                className={styles.sidebarClose}
+                onClick={() => setSidebarOpen(false)}
+                aria-label="Cerrar menú"
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                  <path d="M18 6L6 18M6 6l12 12" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </button>
+            </div>
+            <nav className={styles.sidebarNav}>
+              {navItems.map((item) =>
+                "href" in item && item.href ? (
+                  <Link
+                    key={item.label}
+                    href={item.href}
+                    className={styles.sidebarLink}
+                    onClick={() => setSidebarOpen(false)}
+                  >
+                    {item.label}
+                  </Link>
+                ) : (
+                  <button
+                    key={item.label}
+                    type="button"
+                    className={styles.sidebarLink}
+                    onClick={() => {
+                      sileo.action({
+                        title: item.label,
+                        description: item.detail,
+                        button: {
+                          title: item.buttonText ?? "OK",
+                          onClick: () => sileo.clear(),
+                        },
+                      });
+                      setSidebarOpen(false);
+                    }}
+                  >
+                    {item.label}
+                  </button>
+                )
+              )}
+            </nav>
+            <div className={styles.sidebarFooter}>
+              <button
+                type="button"
+                className={styles.themeButton}
+                onClick={() => setTheme(!darkMode)}
+              >
+                {darkMode ? "Modo oscuro" : "Modo claro"}
+              </button>
+            </div>
+          </aside>
+        </>
+      )}
 
       <main className={styles.main}>
         {!pageReady ? (
