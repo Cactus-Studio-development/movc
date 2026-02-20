@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import Link from "next/link";
 import { sileo } from "sileo";
 import styles from "./page.module.css";
 
@@ -12,6 +13,12 @@ type FeaturedSeries = {
   launch: string;
   synopsis: string;
   poster: string;
+  imdbRating: number;
+  director: string;
+  creators: string[];
+  cast: string[];
+  releaseDate: string;
+  fullPlot: string;
 };
 
 const featuredSeries: FeaturedSeries = {
@@ -22,8 +29,14 @@ const featuredSeries: FeaturedSeries = {
   launch: "Serie destacada: Episodio 1 (Piloto)",
   synopsis:
     "Serie de 8 episodios. Cada episodio dura entre 40 y 60 minutos. Se muestra únicamente el póster del primer episodio: Piloto.",
-  poster:
-    "https://placehold.co/1200x700/0f172a/e2e8f0?text=Episodio+Piloto",
+  poster: "/image/episodio%20piloto.jpg",
+  imdbRating: 8.2,
+  director: "Por confirmar",
+  creators: ["MOVC Cines", "Cactus Studio"],
+  cast: ["Reparto en producción"],
+  releaseDate: "2025",
+  fullPlot:
+    "Una periodista investiga desapariciones sin resolver y descubre secretos que nadie quiere revelar. Serie de 8 episodios de thriller y drama, con una trama que entrelaza misterio e investigación en cada capítulo.",
 };
 
 const navItems = [
@@ -34,16 +47,55 @@ const navItems = [
   {
     label: "Cartelera",
     detail: "Mostrando episodio 1: Piloto.",
-  },
-  {
-    label: "Próximamente",
-    detail: "Bloque de próximos episodios en preparación.",
+    href: "/cartelera",
   },
   {
     label: "Nosotros",
     detail:
-      "Somos MOVC Cines: una plataforma de contenido enfocada en experiencias premium.",
+      "Somos Osisg Playground: una plataforma de contenido enfocada en experiencias premium.",
     buttonText: "Conocernos",
+  },
+];
+
+const placeholderActors = [
+  { id: "1", name: "Por confirmar", role: "Protagonista" },
+  { id: "2", name: "Por confirmar", role: "Reparto" },
+  { id: "3", name: "Por confirmar", role: "Reparto" },
+  { id: "4", name: "Por confirmar", role: "Reparto" },
+  { id: "5", name: "Por confirmar", role: "Reparto" },
+  { id: "6", name: "Por confirmar", role: "Reparto" },
+];
+
+const THEME_STORAGE_KEY = "osisg-playground-theme";
+
+const relatedNews = [
+  {
+    id: "1",
+    platform: "Netflix",
+    title: "Estrenos de series y películas",
+    excerpt: "Novedades del catálogo en streaming.",
+    url: "https://www.netflix.com",
+  },
+  {
+    id: "2",
+    platform: "IMDb",
+    title: "Críticas y valoraciones",
+    excerpt: "Puntuación y reseñas de la audiencia.",
+    url: "https://www.imdb.com",
+  },
+  {
+    id: "3",
+    platform: "Cine nacional",
+    title: "Cartelera de cines argentinos",
+    excerpt: "Estrenos en salas de Argentina.",
+    url: "https://www.imdb.com",
+  },
+  {
+    id: "4",
+    platform: "Osisg",
+    title: "Desarrollo y tecnología",
+    excerpt: "Conocé más sobre nuestro patrocinador.",
+    url: "https://dev.osisg.com/",
   },
 ];
 
@@ -71,12 +123,26 @@ const carouselSlides = [
 ];
 
 export default function Home() {
-  const [darkMode, setDarkMode] = useState(true);
+  const [darkMode, setDarkMode] = useState(false);
   const [previewImage, setPreviewImage] = useState<{
     src: string;
     alt: string;
   } | null>(null);
   const [lastHoverToast, setLastHoverToast] = useState<string>("");
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const stored = localStorage.getItem(THEME_STORAGE_KEY);
+    if (stored === "dark") setDarkMode(true);
+    if (stored === "light") setDarkMode(false);
+  }, []);
+
+  const setTheme = (isDark: boolean) => {
+    setDarkMode(isDark);
+    if (typeof window !== "undefined") {
+      localStorage.setItem(THEME_STORAGE_KEY, isDark ? "dark" : "light");
+    }
+  };
 
   const showImageHoverToast = (key: string, title: string, description: string) => {
     if (lastHoverToast === key) return;
@@ -97,35 +163,47 @@ export default function Home() {
       </div>
       <header className={styles.navbar}>
         <div className={styles.brandGroup}>
-          <div className={styles.logo}>MOVC Cines</div>
+          <div className={styles.logo}>
+            Osisg <span className={styles.logoPlayground}>PLAYGROUND</span>
+          </div>
           <button
             type="button"
             className={styles.themeButton}
-            onClick={() => setDarkMode((current) => !current)}
+            onClick={() => setTheme(!darkMode)}
           >
             {darkMode ? "Modo oscuro" : "Modo claro"}
           </button>
         </div>
         <nav className={styles.navMenu} aria-label="Menú principal">
-          {navItems.map((item) => (
-            <button
-              key={item.label}
-              type="button"
-              className={styles.navLink}
-              onClick={() =>
-                sileo.action({
-                  title: item.label,
-                  description: item.detail,
-                  button: {
-                    title: item.buttonText ?? "OK",
-                    onClick: () => sileo.clear(),
-                  },
-                })
-              }
-            >
-              {item.label}
-            </button>
-          ))}
+          {navItems.map((item) =>
+            "href" in item && item.href ? (
+              <Link
+                key={item.label}
+                href={item.href}
+                className={styles.navLink}
+              >
+                {item.label}
+              </Link>
+            ) : (
+              <button
+                key={item.label}
+                type="button"
+                className={styles.navLink}
+                onClick={() =>
+                  sileo.action({
+                    title: item.label,
+                    description: item.detail,
+                    button: {
+                      title: item.buttonText ?? "OK",
+                      onClick: () => sileo.clear(),
+                    },
+                  })
+                }
+              >
+                {item.label}
+              </button>
+            )
+          )}
         </nav>
       </header>
 
@@ -173,60 +251,139 @@ export default function Home() {
           <p>#Thriller #Drama #Misterio #Investigación</p>
         </section>
 
-        <section className={styles.featuredBoard}>
-          <div className={styles.featuredContent}>
-            <div className={styles.featuredBadges}>
-              <span className={styles.featuredEpisodeBadge}>Episodio 1</span>
-              <span className={styles.featuredStatusBadge}>En cartelera</span>
+        <article className={styles.featuredCardBlock} aria-labelledby="featured-title">
+          <section className={`${styles.featuredBoard} ${styles.animateFadeIn}`}>
+            <div className={styles.featuredContent}>
+              <div className={styles.featuredBadges}>
+                <span className={styles.featuredEpisodeBadge}>Episodio 1</span>
+                <span className={styles.featuredStatusBadge}>En cartelera</span>
+              </div>
+              <p className={styles.featuredLabel}>{featuredSeries.launch}</p>
+              <h2 id="featured-title">{featuredSeries.title}</h2>
+              <p className={styles.featuredSubtitle}>Piloto</p>
+              <p className={styles.featuredSynopsis}>{featuredSeries.synopsis}</p>
+              <div className={styles.featuredMeta}>
+                <span>{featuredSeries.genre}</span>
+                <span>{featuredSeries.duration}</span>
+                <span>{featuredSeries.rating}</span>
+              </div>
+              <button
+                type="button"
+                className={styles.primaryButton}
+                onClick={() =>
+                  sileo.success({
+                    title: "Piloto en cartelera",
+                    description:
+                      "Episodio 1 disponible. Duración variable entre 40 y 60 minutos.",
+                  })
+                }
+              >
+                Ver detalle del piloto
+              </button>
             </div>
-            <p className={styles.featuredLabel}>{featuredSeries.launch}</p>
-            <h2>{featuredSeries.title}</h2>
-            <p className={styles.featuredSubtitle}>Piloto</p>
-            <p className={styles.featuredSynopsis}>{featuredSeries.synopsis}</p>
-            <div className={styles.featuredMeta}>
-              <span>{featuredSeries.genre}</span>
-              <span>{featuredSeries.duration}</span>
-              <span>{featuredSeries.rating}</span>
+            <div className={styles.featuredImageWrap}>
+              <button
+                type="button"
+                className={styles.imageTrigger}
+                onMouseEnter={() =>
+                  showImageHoverToast(
+                    "piloto",
+                    "Episodio 1: Piloto",
+                    "Póster principal de cartelera. Haz click para ampliar.",
+                  )
+                }
+                onMouseLeave={() => setLastHoverToast("")}
+                onClick={() =>
+                  setPreviewImage({
+                    src: featuredSeries.poster,
+                    alt: "Póster del episodio 1: Piloto",
+                  })
+                }
+              >
+                <img
+                  src={featuredSeries.poster}
+                  alt="Póster del episodio 1: Piloto"
+                  className={styles.featuredImage}
+                />
+              </button>
             </div>
-            <button
-              type="button"
-              className={styles.primaryButton}
-              onClick={() =>
-                sileo.success({
-                  title: "Piloto en cartelera",
-                  description:
-                    "Episodio 1 disponible. Duración variable entre 40 y 60 minutos.",
-                })
-              }
-            >
-              Ver detalle del piloto
-            </button>
-          </div>
-          <div className={styles.featuredImageWrap}>
-            <button
-              type="button"
-              className={styles.imageTrigger}
-              onMouseEnter={() =>
-                showImageHoverToast(
-                  "piloto",
-                  "Episodio 1: Piloto",
-                  "Póster principal de cartelera. Haz click para ampliar.",
-                )
-              }
-              onMouseLeave={() => setLastHoverToast("")}
-              onClick={() =>
-                setPreviewImage({
-                  src: featuredSeries.poster,
-                  alt: "Póster del episodio 1: Piloto",
-                })
-              }
-            >
-              <img
-                src={featuredSeries.poster}
-                alt="Póster del episodio 1: Piloto"
-                className={styles.featuredImage}
-              />
-            </button>
+          </section>
+
+          <section className={`${styles.imdbSection} ${styles.animateSlideUp}`} aria-label={`Ficha de ${featuredSeries.title}`}>
+            <div className={styles.imdbCardRef}>
+              <span className={styles.imdbCardRefLabel}>Ficha correspondiente a</span>
+              <strong className={styles.imdbCardRefTitle}>{featuredSeries.title}</strong>
+            </div>
+            <h3 className={styles.imdbSectionTitle}>Ficha de la serie</h3>
+            <div className={styles.imdbRatingRow}>
+              <span className={styles.imdbLabel}>Valoración</span>
+              <div className={styles.imdbStars}>
+                <span className={styles.imdbStar} aria-hidden="true">★</span>
+                <span className={styles.imdbRatingValue}>{featuredSeries.imdbRating}</span>
+                <span className={styles.imdbRatingMax}>/10</span>
+              </div>
+            </div>
+            <dl className={styles.imdbDetails}>
+              {[
+                { term: "Director", desc: featuredSeries.director },
+                { term: "Creadores", desc: featuredSeries.creators.join(", ") },
+                { term: "Reparto", desc: featuredSeries.cast.join(", ") },
+                { term: "Estreno", desc: featuredSeries.releaseDate },
+              ].map((row, i) => (
+                <div key={row.term} className={styles.imdbDetailRow} style={{ animationDelay: `${0.1 * (i + 1)}s` }}>
+                  <dt className={styles.imdbTerm}>{row.term}</dt>
+                  <dd className={styles.imdbDesc}>{row.desc}</dd>
+                </div>
+              ))}
+            </dl>
+            <div className={styles.imdbPlot}>
+              <h4 className={styles.imdbPlotTitle}>Trama</h4>
+              <p>{featuredSeries.fullPlot}</p>
+            </div>
+          </section>
+
+          <section className={`${styles.actorsSection} ${styles.animateFadeIn}`}>
+            <h3 className={styles.actorsSectionTitle}>Reparto / Actores</h3>
+            <p className={styles.actorsSectionIntro}>Elenco de &quot;{featuredSeries.title}&quot;</p>
+            <div className={styles.actorsGrid}>
+              {placeholderActors.map((actor, index) => (
+                <div
+                  key={actor.id}
+                  className={styles.actorCard}
+                  style={{ animationDelay: `${0.08 * index}s` }}
+                >
+                  <div className={styles.actorAvatar} aria-hidden="true">
+                    <svg className={styles.actorAvatarIcon} viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                      <circle cx="12" cy="8" r="3.5" stroke="currentColor" strokeWidth="1.5" />
+                      <path d="M5 20c0-3.5 3.5-6 7-6s7 2.5 7 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                    </svg>
+                  </div>
+                  <span className={styles.actorName}>{actor.name}</span>
+                  <span className={styles.actorRole}>{actor.role}</span>
+                </div>
+              ))}
+            </div>
+          </section>
+        </article>
+
+        <section className={`${styles.newsSection} ${styles.animateFadeIn}`}>
+          <h3 className={styles.newsSectionTitle}>Noticias de otras plataformas</h3>
+          <p className={styles.newsSectionIntro}>Enlaces a sitios relacionados con cine y series</p>
+          <div className={styles.newsGrid}>
+            {relatedNews.map((item) => (
+              <a
+                key={item.id}
+                href={item.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.newsCard}
+              >
+                <span className={styles.newsPlatform}>{item.platform}</span>
+                <h4 className={styles.newsCardTitle}>{item.title}</h4>
+                <p className={styles.newsCardExcerpt}>{item.excerpt}</p>
+                <span className={styles.newsCardLink}>Visitar →</span>
+              </a>
+            ))}
           </div>
         </section>
 
@@ -299,13 +456,6 @@ export default function Home() {
               ))}
             </div>
           </div>
-        </section>
-
-        <section className={styles.infoSection}>
-          <h3>Próximamente</h3>
-          <p>
-            Próximamente se habilitarán fichas por episodio con horarios y sala.
-          </p>
         </section>
 
         <section className={styles.infoSection}>

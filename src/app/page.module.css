@@ -118,6 +118,12 @@
   text-transform: uppercase;
 }
 
+.logoPlayground {
+  color: #dc2626;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+}
+
 .brandGroup {
   display: flex;
   align-items: center;
@@ -416,6 +422,394 @@
   filter: saturate(1.08) contrast(1.04);
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.2);
   background: rgba(2, 6, 23, 0.4);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animateFadeIn {
+  animation: fadeIn 0.55s ease-out forwards;
+}
+
+.animateSlideUp {
+  animation: slideUp 0.5s ease-out 0.15s forwards;
+  opacity: 0;
+}
+
+.featuredCardBlock {
+  margin-top: 1rem;
+  padding: 0;
+  border: 1px solid var(--ios-border);
+  border-radius: 28px;
+  overflow: hidden;
+  background: rgba(10, 12, 28, 0.4);
+  box-shadow: 0 20px 50px rgba(2, 6, 23, 0.35);
+}
+
+.page[data-theme="light"] .featuredCardBlock {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.featuredCardBlock .featuredBoard {
+  margin-top: 0;
+  border-radius: 0;
+  border: none;
+  border-bottom: 1px solid var(--ios-border);
+}
+
+.featuredCardBlock .imdbSection {
+  margin-top: 0;
+  border-radius: 0;
+  border: none;
+  border-bottom: 1px solid var(--ios-border);
+  border-left: 4px solid #f5c518;
+}
+
+.featuredCardBlock .actorsSection {
+  margin-top: 0;
+  border-radius: 0;
+  border: none;
+  border-top: 1px solid var(--ios-border);
+}
+
+.imdbCardRef {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.4rem;
+  margin-bottom: 0.85rem;
+  padding: 0.4rem 0.6rem;
+  border-radius: 10px;
+  background: rgba(245, 197, 24, 0.12);
+  border: 1px solid rgba(245, 197, 24, 0.35);
+}
+
+.imdbCardRefLabel {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+
+.imdbCardRefTitle {
+  font-size: 0.95rem;
+  color: var(--text);
+}
+
+.imdbSection {
+  margin-top: 1rem;
+  border-radius: 16px;
+  border: 1px solid var(--ios-border);
+  padding: 1.25rem 1.35rem;
+  background: rgba(15, 12, 28, 0.85);
+  backdrop-filter: blur(12px);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.imdbSection:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
+}
+
+.page[data-theme="light"] .imdbSection {
+  background: rgba(255, 255, 255, 0.75);
+}
+
+.imdbSectionTitle {
+  margin: 0 0 1rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text);
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid var(--ios-border);
+}
+
+.imdbRatingRow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.imdbLabel {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.imdbStars {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.imdbStar {
+  color: #f5c518;
+  font-size: 1.35rem;
+  line-height: 1;
+  display: inline-block;
+  animation: starPulse 2s ease-in-out infinite;
+}
+
+@keyframes starPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.9; transform: scale(1.05); }
+}
+
+.imdbRatingValue {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #f5c518;
+  letter-spacing: -0.02em;
+}
+
+.imdbRatingMax {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.imdbDetails {
+  margin: 0;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.imdbDetailRow {
+  display: grid;
+  grid-template-columns: 6.5rem 1fr;
+  gap: 0.6rem;
+  align-items: start;
+  animation: slideUp 0.4s ease-out forwards;
+  opacity: 0;
+}
+
+.imdbTerm {
+  margin: 0;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.imdbDesc {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--text);
+  line-height: 1.4;
+}
+
+.imdbPlot {
+  margin-top: 1.1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--ios-border);
+}
+
+.imdbPlotTitle {
+  margin: 0 0 0.4rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.imdbPlot p {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: var(--text);
+}
+
+@media (max-width: 480px) {
+  .imdbDetailRow {
+    grid-template-columns: 1fr;
+  }
+}
+
+.actorsSection {
+  margin-top: 1rem;
+  padding: 1.25rem 1.35rem;
+  border-radius: 16px;
+  border: 1px solid var(--ios-border);
+  background: var(--ios-glass);
+  backdrop-filter: blur(12px);
+}
+
+.actorsSectionTitle {
+  margin: 0 0 0.25rem;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.actorsSectionIntro {
+  margin: 0 0 1rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.actorsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 1rem;
+}
+
+.actorCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem 0.5rem;
+  border-radius: 14px;
+  border: 1px solid var(--ios-border);
+  background: rgba(255, 255, 255, 0.04);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  animation: fadeIn 0.45s ease-out forwards;
+  opacity: 0;
+}
+
+.actorCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+}
+
+.actorAvatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.45), rgba(37, 99, 235, 0.45));
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.page[data-theme="light"] .actorAvatar {
+  color: rgba(255, 255, 255, 0.9);
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.5), rgba(37, 99, 235, 0.5));
+}
+
+.actorAvatarIcon {
+  width: 32px;
+  height: 32px;
+}
+
+.actorName {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text);
+  text-align: center;
+}
+
+.actorRole {
+  font-size: 0.75rem;
+  color: var(--muted);
+  margin-top: 0.2rem;
+}
+
+.newsSection {
+  margin-top: 1rem;
+  padding: 1.25rem 1.35rem;
+  border-radius: 16px;
+  border: 1px solid var(--ios-border);
+  background: var(--ios-glass);
+  backdrop-filter: blur(12px);
+}
+
+.newsSectionTitle {
+  margin: 0 0 0.25rem;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.newsSectionIntro {
+  margin: 0 0 1rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.newsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1rem;
+}
+
+.newsCard {
+  display: block;
+  padding: 1.1rem;
+  border-radius: 14px;
+  border: 1px solid var(--ios-border);
+  background: rgba(255, 255, 255, 0.05);
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  animation: fadeIn 0.5s ease-out forwards;
+  opacity: 0;
+}
+
+.newsCard:nth-child(1) { animation-delay: 0.05s; }
+.newsCard:nth-child(2) { animation-delay: 0.15s; }
+.newsCard:nth-child(3) { animation-delay: 0.25s; }
+.newsCard:nth-child(4) { animation-delay: 0.35s; }
+
+.newsCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.2);
+  border-color: rgba(124, 58, 237, 0.4);
+}
+
+.newsPlatform {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #f5c518;
+  margin-bottom: 0.35rem;
+}
+
+.newsCardTitle {
+  margin: 0 0 0.4rem;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.newsCardExcerpt {
+  margin: 0 0 0.6rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+.newsCardLink {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--hbo-violet);
+  transition: color 0.2s ease;
+}
+
+.newsCard:hover .newsCardLink {
+  color: var(--hbo-blue);
 }
 
 .sponsorSection {
