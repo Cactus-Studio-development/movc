@@ -1,36 +1,32 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# MOVC Cines
 
-## Getting Started
+Cartelera de películas y series. Next.js 16, React 19, Tailwind 4, TypeScript.
 
-First, run the development server:
+## Cómo arrancar
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Abrí [http://localhost:3000](http://localhost:3000) en el navegador.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Secciones de la página
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. **Navbar** – Logo MOVC Cines, botón modo oscuro/claro, menú (Inicio, Cartelera, Próximamente, Nosotros).
+2. **Presentación** – Imagen de portada de la serie destacada y texto de presentación.
+3. **Hero** – Bloque “Serie en producción” con hashtags (Thriller, Drama, Misterio, Investigación).
+4. **Cartelera (episodio destacado)** – Card del Episodio 1: Piloto con badges, sinopsis, meta (género, duración, edad), botón “Ver detalle del piloto” y póster ampliable.
+5. **Ficha de la serie** – Bloque tipo [IMDb](https://www.imdb.com/es/): valoración con estrella, Director, Creadores, Reparto, Estreno y Trama.
+6. **Patrocinado por Osisg** – Enlace a [dev.osisg.com](https://dev.osisg.com/), texto de patrocinio y badges App Store / Play Store.
+7. **Producción** – Carrusel de imágenes del detrás de cámara (click para ampliar).
+8. **Nosotros** – Correo, teléfono, botones WhatsApp y Gmail.
+9. **Lightbox** – Modal para ver imágenes en grande (portada, póster, fotos del carrusel).
 
-## Learn More
+Fondo: imagen de carteleras (`/image/imagen.jpg`) con overlay y contraste según modo oscuro/claro.
 
-To learn more about Next.js, take a look at the following resources:
+## Scripts
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `npm run dev` – Servidor de desarrollo
+- `npm run build` – Build de producción
+- `npm run start` – Servidor de producción
+- `npm run lint` – ESLint

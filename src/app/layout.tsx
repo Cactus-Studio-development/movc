@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "MOVC Cines | Cartelera",
+  title: "Osisg PLAYGROUND | Cartelera",
   description: "Cartelera de películas responsive en desarrollo",
 };
 
