@@ -161,11 +161,20 @@ export default function Home() {
         <div className={styles.pageBackgroundOverlay} />
         <div className={styles.pageBackgroundGrain} />
       </div>
-      <header className={styles.navbar}>
+      <header className={styles.mainHeader}>
+        <div className={styles.mainHeaderContent}>
+          <h1 className={styles.mainHeaderTitle}>
+            Osisg <span className={styles.mainHeaderHighlight}>Playground</span>
+          </h1>
+          <p className={styles.mainHeaderTagline}>Plataforma de contenido — series, cortos y películas</p>
+        </div>
+      </header>
+
+      <nav className={styles.navbar} aria-label="Navegación">
         <div className={styles.brandGroup}>
-          <div className={styles.logo}>
+          <Link href="/" className={styles.logo}>
             Osisg <span className={styles.logoPlayground}>PLAYGROUND</span>
-          </div>
+          </Link>
           <button
             type="button"
             className={styles.themeButton}
@@ -174,7 +183,7 @@ export default function Home() {
             {darkMode ? "Modo oscuro" : "Modo claro"}
           </button>
         </div>
-        <nav className={styles.navMenu} aria-label="Menú principal">
+        <div className={styles.navMenu} role="navigation" aria-label="Menú principal">
           {navItems.map((item) =>
             "href" in item && item.href ? (
               <Link
@@ -204,8 +213,8 @@ export default function Home() {
               </button>
             )
           )}
-        </nav>
-      </header>
+        </div>
+      </nav>
 
       <main className={styles.main}>
         <section className={styles.presentationSection}>
@@ -458,72 +467,46 @@ export default function Home() {
           </div>
         </section>
 
-        <section className={styles.infoSection}>
+        <section id="nosotros" className={styles.infoSection}>
           <h3>Nosotros</h3>
-          <p>Correo: cactus.studio.ar@gmail.com</p>
-          <p>Teléfono: +54 9 3765287514</p>
-          <div className={styles.contactActions}>
-            <a
-              className={`${styles.contactButton} ${styles.whatsappButton}`}
-              href="https://wa.me/3765287514?text=Hola%20MOVC%20Cines,%20quiero%20informaci%C3%B3n%20sobre%20la%20cartelera."
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <svg
-                className={styles.contactIcon}
-                viewBox="0 0 24 24"
-                fill="none"
-                aria-hidden="true"
-              >
-                <path
-                  d="M20 12A8 8 0 0 1 8.52 19.2L4 20l.82-4.35A8 8 0 1 1 20 12Z"
-                  stroke="currentColor"
-                  strokeWidth="1.8"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M9.4 8.9c.22-.48.46-.5.68-.5.17 0 .35 0 .53.02.16.01.37-.06.58.44.2.48.68 1.67.74 1.8.06.13.1.28.02.45-.08.17-.12.27-.24.42-.12.15-.25.33-.36.45-.12.12-.24.25-.1.49.15.23.65 1.07 1.39 1.73.95.86 1.74 1.13 1.99 1.26.25.12.4.1.55-.06.15-.17.64-.75.81-1.01.17-.25.34-.21.58-.13.24.08 1.52.72 1.78.86.26.13.43.2.5.32.06.12.06.7-.16 1.37-.22.67-1.3 1.29-1.77 1.36-.45.07-.98.1-1.58-.1-.36-.12-.82-.27-1.4-.53-.25-.11-1.66-.68-2.73-1.66-1.04-.95-1.74-2.13-1.94-2.47-.2-.34-.76-1.27-.76-2.42 0-1.15.58-1.7.81-1.95Z"
-                  fill="currentColor"
-                />
-              </svg>
-              WhatsApp
-            </a>
-
-            <a
-              className={`${styles.contactButton} ${styles.gmailButton}`}
-              href="https://mail.google.com/mail/?view=cm&fs=1&to=cactus.studio.ar@gmail.com&su=Consulta%20MOVC%20Cines"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <svg
-                className={styles.contactIcon}
-                viewBox="0 0 24 24"
-                fill="none"
-                aria-hidden="true"
-              >
-                <rect
-                  x="3"
-                  y="5"
-                  width="18"
-                  height="14"
-                  rx="2.2"
-                  stroke="currentColor"
-                  strokeWidth="1.8"
-                />
-                <path
-                  d="m4.5 7 7.5 5.7L19.5 7"
-                  stroke="currentColor"
-                  strokeWidth="1.8"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-              Gmail
-            </a>
-          </div>
+          <p>Osisg Playground — plataforma de contenido. Patrocinado por Osisg.</p>
         </section>
       </main>
+
+      <footer className={styles.footer}>
+        <div className={styles.footerContent}>
+          <div className={styles.footerLeft}>
+            <div className={styles.footerLinks}>
+              <div className={styles.footerCol}>
+                <Link href="/">Inicio</Link>
+                <Link href="/cartelera">Cartelera</Link>
+              </div>
+              <div className={styles.footerCol}>
+                <a href="https://dev.osisg.com/" target="_blank" rel="noopener noreferrer">Osisg</a>
+                <span className={styles.footerDot}>·</span>
+                <Link href="/#nosotros">Nosotros</Link>
+              </div>
+            </div>
+            <p className={styles.footerCopy}>
+              © {new Date().getFullYear()} Osisg Playground. Patrocinado por Osisg.
+            </p>
+          </div>
+          <div className={styles.footerSocialIcons} aria-hidden="true">
+            <span className={styles.footerSocialIcon} title="Facebook">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            </span>
+            <span className={styles.footerSocialIcon} title="X">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            </span>
+            <span className={styles.footerSocialIcon} title="Instagram">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            </span>
+            <span className={styles.footerSocialIcon} title="YouTube">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+            </span>
+          </div>
+        </div>
+      </footer>
 
       {previewImage ? (
         <div

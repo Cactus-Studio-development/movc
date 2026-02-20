@@ -92,6 +92,59 @@
   }
 }
 
+/* Header principal llamativo */
+.mainHeader {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  padding: 2rem 1.5rem 1.5rem;
+  text-align: center;
+  background: linear-gradient(180deg, rgba(124, 58, 237, 0.25) 0%, rgba(37, 99, 235, 0.12) 40%, transparent 100%);
+  border-bottom: 1px solid var(--ios-border);
+}
+
+.page[data-theme="light"] .mainHeader {
+  background: linear-gradient(180deg, rgba(124, 58, 237, 0.18) 0%, rgba(37, 99, 235, 0.08) 40%, transparent 100%);
+  border-bottom-color: rgba(0, 0, 0, 0.08);
+}
+
+.mainHeaderContent {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.mainHeaderTitle {
+  margin: 0;
+  font-size: clamp(1.75rem, 5vw, 2.5rem);
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: var(--text);
+  text-shadow: 0 2px 20px rgba(124, 58, 237, 0.35);
+}
+
+.mainHeaderHighlight {
+  background: linear-gradient(135deg, #dc2626, #f97316);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 900;
+}
+
+.page[data-theme="light"] .mainHeaderHighlight {
+  background: linear-gradient(135deg, #b91c1c, #ea580c);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.mainHeaderTagline {
+  margin: 0.5rem 0 0;
+  font-size: 0.95rem;
+  color: var(--muted);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
 .navbar {
   position: sticky;
   top: 0;
@@ -116,6 +169,8 @@
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+  color: inherit;
+  text-decoration: none;
 }
 
 .logoPlayground {
@@ -1042,5 +1097,108 @@
   }
   100% {
     transform: translateX(-50%);
+  }
+}
+
+/* Footer estilo Netflix/IMDb */
+.footer {
+  margin-top: 2.5rem;
+  padding: 2rem 1.5rem 1.5rem;
+  background: rgba(0, 0, 0, 0.45);
+  border-top: 1px solid var(--ios-border);
+  position: relative;
+  z-index: 1;
+}
+
+.page[data-theme="light"] .footer {
+  background: rgba(0, 0, 0, 0.08);
+  border-top-color: rgba(0, 0, 0, 0.12);
+}
+
+.footerContent {
+  max-width: 980px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.footerLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.footerLinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 2rem;
+}
+
+.footerSocialIcons {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-shrink: 0;
+}
+
+.footerSocialIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  color: var(--muted);
+  opacity: 0.85;
+  pointer-events: none;
+}
+
+.footerSocialIcon svg {
+  width: 22px;
+  height: 22px;
+}
+
+.footerCol {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1rem;
+}
+
+.footerCol a {
+  color: var(--muted);
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.footerCol a:hover {
+  color: var(--text);
+  text-decoration: underline;
+}
+
+.footerDot {
+  color: var(--muted);
+  font-size: 0.85rem;
+  opacity: 0.7;
+}
+
+.footerCopy {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--muted);
+  opacity: 0.9;
+}
+
+@media (max-width: 640px) {
+  .footerContent {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .footerSocialIcons {
+    align-self: flex-end;
   }
 }
