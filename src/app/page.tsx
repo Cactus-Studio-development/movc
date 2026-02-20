@@ -1,9 +1,15 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import { sileo } from "sileo";
 import styles from "./page.module.css";
+
+const Lottie = dynamic(
+  () => import("lottie-react").then((mod) => mod.default),
+  { ssr: false }
+);
 
 type FeaturedSeries = {
   title: string;
@@ -122,6 +128,9 @@ const carouselSlides = [
   },
 ];
 
+const LOTTIE_ENTRANCE_URL =
+  "https://assets2.lottiefiles.com/packages/lf20_touohxv0.json";
+
 export default function Home() {
   const [darkMode, setDarkMode] = useState(false);
   const [previewImage, setPreviewImage] = useState<{
@@ -129,12 +138,53 @@ export default function Home() {
     alt: string;
   } | null>(null);
   const [lastHoverToast, setLastHoverToast] = useState<string>("");
+  const [entranceDone, setEntranceDone] = useState(false);
+  const [pageReady, setPageReady] = useState(false);
+  const [lottieData, setLottieData] = useState<object | null>(null);
+  const [entranceLeaving, setEntranceLeaving] = useState(false);
+  const entranceTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const finishEntrance = useCallback(() => {
+    setEntranceLeaving(true);
+    setTimeout(() => setEntranceDone(true), 480);
+  }, []);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
     const stored = localStorage.getItem(THEME_STORAGE_KEY);
     if (stored === "dark") setDarkMode(true);
     if (stored === "light") setDarkMode(false);
+  }, []);
+
+  useEffect(() => {
+    let cancelled = false;
+    fetch(LOTTIE_ENTRANCE_URL)
+      .then((r) => r.json())
+      .then((data) => {
+        if (!cancelled) setLottieData(data);
+      })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (entranceDone) return;
+    entranceTimeoutRef.current = setTimeout(finishEntrance, 2800);
+    return () => {
+      if (entranceTimeoutRef.current) clearTimeout(entranceTimeoutRef.current);
+    };
+  }, [entranceDone, finishEntrance]);
+
+  useEffect(() => {
+    const onLoad = () => {
+      setTimeout(() => setPageReady(true), 400);
+    };
+    if (typeof window === "undefined") return;
+    if (document.readyState === "complete") onLoad();
+    else window.addEventListener("load", onLoad);
+    return () => window.removeEventListener("load", onLoad);
   }, []);
 
   const setTheme = (isDark: boolean) => {
@@ -156,6 +206,24 @@ export default function Home() {
 
   return (
     <div data-theme={darkMode ? "dark" : "light"} className={styles.page}>
+      {!entranceDone && (
+        <div
+          className={`${styles.entranceOverlay} ${entranceLeaving ? styles.entranceOverlayOut : ""}`}
+          aria-hidden="true"
+        >
+          <div className={styles.entranceLottieWrap}>
+            {lottieData && (
+              <Lottie
+                animationData={lottieData}
+                loop={false}
+                onComplete={finishEntrance}
+                className={styles.entranceLottie}
+              />
+            )}
+          </div>
+        </div>
+      )}
+
       <div className={styles.pageBackground} aria-hidden="true">
         <div className={styles.pageBackgroundImage} />
         <div className={styles.pageBackgroundOverlay} />
@@ -217,6 +285,36 @@ export default function Home() {
       </nav>
 
       <main className={styles.main}>
+        {!pageReady ? (
+          <div className={styles.skeletonRoot}>
+            <div className={styles.skeletonSection}>
+              <div className={styles.skeletonImage} />
+              <div className={styles.skeletonText}>
+                <div className={styles.skeletonLine} />
+                <div className={styles.skeletonLine} style={{ width: "70%" }} />
+                <div className={styles.skeletonLine} style={{ width: "90%" }} />
+              </div>
+            </div>
+            <div className={styles.skeletonSection}>
+              <div className={styles.skeletonBar} />
+              <div className={styles.skeletonBar} style={{ width: "60%" }} />
+            </div>
+            <div className={styles.skeletonFeatured}>
+              <div className={styles.skeletonText}>
+                <div className={styles.skeletonLine} />
+                <div className={styles.skeletonLine} style={{ width: "80%" }} />
+                <div className={styles.skeletonLine} style={{ width: "50%" }} />
+              </div>
+              <div className={styles.skeletonImage} />
+            </div>
+            <div className={styles.skeletonGrid}>
+              {[1, 2, 3, 4].map((i) => (
+                <div key={i} className={styles.skeletonCard} />
+              ))}
+            </div>
+          </div>
+        ) : (
+          <>
         <section className={styles.presentationSection}>
           <button
             type="button"
@@ -471,6 +569,8 @@ export default function Home() {
           <h3>Nosotros</h3>
           <p>Osisg Playground — plataforma de contenido. Patrocinado por Osisg.</p>
         </section>
+          </>
+        )}
       </main>
 
       <footer className={styles.footer}>
