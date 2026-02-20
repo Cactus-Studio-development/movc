@@ -8,7 +8,7 @@ Cartelera de películas y series. Next.js 16, React 19, Tailwind 4, TypeScript.
 npm run dev
 ```
 Abrí [http://localhost:3000](http://localhost:3000) en el navegador.
-
+//osisg
 ## Secciones de la página
 
 1. **Navbar** – Logo MOVC Cines, botón modo oscuro/claro, menú (Inicio, Cartelera, Próximamente, Nosotros).
