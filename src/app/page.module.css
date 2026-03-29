@@ -1,9 +1,11 @@
 .page {
-  --ios-glass: rgba(255, 255, 255, 0.14);
-  --ios-border: rgba(255, 255, 255, 0.3);
+  --ios-glass: rgba(255, 255, 255, 0.10);
+  --ios-border: rgba(255, 255, 255, 0.22);
   --hbo-violet: #7c3aed;
   --hbo-indigo: #312e81;
   --hbo-blue: #2563eb;
+  --hbo-teal: #0d9488;
+  --hbo-teal-glow: rgba(13, 148, 136, 0.35);
   --surface: rgba(10, 12, 28, 0.7);
   --text: #eef2ff;
   --muted: #c7d2fe;
@@ -11,9 +13,10 @@
   min-height: 100vh;
   color: var(--text);
   background:
-    radial-gradient(circle at 15% 10%, rgba(37, 99, 235, 0.4), transparent 35%),
-    radial-gradient(circle at 85% 5%, rgba(124, 58, 237, 0.35), transparent 38%),
-    linear-gradient(140deg, #050816 0%, #10042f 48%, #0a0920 100%);
+    radial-gradient(ellipse at 12% 8%, rgba(37, 99, 235, 0.45), transparent 32%),
+    radial-gradient(ellipse at 88% 6%, rgba(124, 58, 237, 0.4), transparent 36%),
+    radial-gradient(ellipse at 50% 95%, rgba(13, 148, 136, 0.18), transparent 40%),
+    linear-gradient(145deg, #03051a 0%, #0e0228 40%, #070a1e 75%, #020d12 100%);
 }
 
 .page[data-theme="light"] {
@@ -21,9 +24,10 @@
   --text: #111827;
   --muted: #334155;
   background:
-    radial-gradient(circle at 10% 10%, rgba(147, 197, 253, 0.7), transparent 35%),
-    radial-gradient(circle at 85% 5%, rgba(196, 181, 253, 0.65), transparent 38%),
-    linear-gradient(145deg, #f8fafc 0%, #eef2ff 45%, #e0e7ff 100%);
+    radial-gradient(ellipse at 10% 10%, rgba(147, 197, 253, 0.75), transparent 35%),
+    radial-gradient(ellipse at 85% 5%, rgba(196, 181, 253, 0.7), transparent 38%),
+    radial-gradient(ellipse at 50% 92%, rgba(13, 148, 136, 0.12), transparent 40%),
+    linear-gradient(148deg, #f0f4ff 0%, #eaedff 48%, #dde5f8 100%);
 }
 
 .pageBackground {
@@ -54,7 +58,8 @@
   inset: 0;
   z-index: 1;
   background:
-    linear-gradient(160deg, rgba(5, 8, 22, 0.78) 0%, rgba(16, 4, 47, 0.72) 45%, rgba(10, 9, 32, 0.82) 100%);
+    radial-gradient(ellipse at 50% 0%, rgba(2, 6, 23, 0.3) 0%, transparent 70%),
+    linear-gradient(175deg, rgba(3, 5, 20, 0.82) 0%, rgba(14, 2, 40, 0.76) 45%, rgba(7, 9, 26, 0.88) 100%);
 }
 
 .page[data-theme="light"] .pageBackgroundOverlay {
@@ -105,7 +110,14 @@
 
 .page[data-theme="light"] .mainHeader {
   background: linear-gradient(180deg, rgba(124, 58, 237, 0.18) 0%, rgba(37, 99, 235, 0.08) 40%, transparent 100%);
-  border-bottom-color: rgba(0, 0, 0, 0.08);
+  border-bottom-color: rgba(0, 0, 0, 0.14);
+}
+
+.page[data-theme="light"] .mainHeaderTitle {
+  background: linear-gradient(135deg, #1e3a5f 0%, #4c1d95 55%, #0f766e 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .mainHeaderContent {
@@ -117,9 +129,12 @@
   margin: 0;
   font-size: clamp(1.75rem, 5vw, 2.5rem);
   font-weight: 800;
-  letter-spacing: 0.04em;
-  color: var(--text);
-  text-shadow: 0 2px 20px rgba(124, 58, 237, 0.35);
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, #e0e7ff 0%, #c4b5fd 55%, #7dd3fc 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: none;
 }
 
 .mainHeaderHighlight {
@@ -156,7 +171,7 @@
   border: 1px solid var(--ios-border);
   border-radius: 16px;
   background: var(--ios-glass);
-  backdrop-filter: blur(14px) saturate(130%);
+  backdrop-filter: blur(18px) saturate(160%);
   box-shadow: 0 16px 40px rgba(2, 6, 23, 0.35);
   display: flex;
   align-items: center;
@@ -275,7 +290,7 @@
   backdrop-filter: blur(14px) saturate(130%);
   border-left: 1px solid var(--ios-border);
   box-shadow: -8px 0 32px rgba(0, 0, 0, 0.3);
-  animation: sidebarSlideIn 0.28s ease forwards;
+  animation: sidebarSlideIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .page[data-theme="light"] .sidebar {
@@ -287,9 +302,11 @@
 @keyframes sidebarSlideIn {
   from {
     transform: translateX(100%);
+    opacity: 0.5;
   }
   to {
     transform: translateX(0);
+    opacity: 1;
   }
 }
 
@@ -380,6 +397,12 @@
   }
 }
 
+@media (min-width: 1024px) {
+  .navbar {
+    padding: 0.85rem 1.5rem;
+  }
+}
+
 .themeButton {
   border: 1px solid var(--ios-border);
   border-radius: 999px;
@@ -394,12 +417,12 @@
   position: relative;
   z-index: 1;
   width: min(1180px, 94%);
-  margin: 1.2rem auto 0;
+  margin: 1.5rem auto 0;
   padding-bottom: 2.4rem;
 }
 
 .presentationSection {
-  margin-top: 1rem;
+  margin-top: 1.5rem;
   border: 1px solid var(--ios-border);
   border-radius: 22px;
   overflow: hidden;
@@ -447,7 +470,7 @@
 }
 
 .hero {
-  margin-top: 1rem;
+  margin-top: 1.5rem;
   border: 1px solid var(--ios-border);
   border-radius: 22px;
   padding: 1.2rem;
@@ -478,7 +501,7 @@
 }
 
 .featuredBoard {
-  margin-top: 1rem;
+  margin-top: 1.5rem;
   display: grid;
   grid-template-columns: 1fr;
   overflow: hidden;
@@ -488,10 +511,12 @@
     linear-gradient(145deg, rgba(37, 99, 235, 0.22) 0%, transparent 50%),
     linear-gradient(320deg, rgba(124, 58, 237, 0.25) 0%, transparent 45%),
     var(--surface);
+  backdrop-filter: blur(16px) saturate(140%);
   box-shadow:
-    0 0 0 1px rgba(255, 255, 255, 0.06) inset,
-    0 24px 48px rgba(2, 6, 23, 0.5),
-    0 12px 24px rgba(124, 58, 237, 0.12);
+    0 0 0 1px rgba(255, 255, 255, 0.07) inset,
+    0 32px 64px rgba(2, 6, 23, 0.6),
+    0 12px 24px rgba(124, 58, 237, 0.14),
+    0 4px 8px rgba(13, 148, 136, 0.08);
 }
 
 .featuredContent {
@@ -522,6 +547,8 @@
 
 .featuredEpisodeBadge {
   display: inline-block;
+  position: relative;
+  overflow: hidden;
   padding: 0.32rem 0.75rem;
   border-radius: 999px;
   font-size: 0.75rem;
@@ -531,6 +558,23 @@
   color: #f8fafc;
   background: linear-gradient(135deg, var(--hbo-blue), var(--hbo-violet));
   box-shadow: 0 4px 14px rgba(124, 58, 237, 0.35);
+}
+
+.featuredEpisodeBadge::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(105deg, transparent 20%, rgba(255, 255, 255, 0.35) 50%, transparent 80%);
+  animation: badgeShimmer 3.5s ease-in-out infinite 1s;
+}
+
+@keyframes badgeShimmer {
+  0%  { left: -100%; }
+  35% { left: 140%; }
+  100%{ left: 140%; }
 }
 
 .featuredStatusBadge {
@@ -557,7 +601,7 @@
   margin: 0.5rem 0 0.2rem;
   font-size: clamp(1.4rem, 3.2vw, 2.1rem);
   font-weight: 800;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
   line-height: 1.2;
 }
 
@@ -572,7 +616,7 @@
   margin: 0;
   color: var(--muted);
   font-size: 0.9rem;
-  line-height: 1.55;
+  line-height: 1.65;
 }
 
 .featuredContent p.featuredSynopsis {
@@ -603,14 +647,20 @@
   font-weight: 700;
   color: #f8fafc;
   background: linear-gradient(135deg, var(--hbo-blue), var(--hbo-violet));
-  box-shadow: 0 12px 28px rgba(37, 99, 235, 0.38);
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  animation: buttonGlow 3s ease-in-out infinite;
 }
 
 .primaryButton:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 14px 32px rgba(124, 58, 237, 0.4);
+  animation: none;
+  transform: translateY(-3px);
+  box-shadow: 0 16px 36px rgba(124, 58, 237, 0.5);
+}
+
+@keyframes buttonGlow {
+  0%, 100% { box-shadow: 0 12px 28px rgba(37, 99, 235, 0.38); }
+  50%       { box-shadow: 0 12px 28px rgba(124, 58, 237, 0.55), 0 0 0 4px rgba(124, 58, 237, 0.12); }
 }
 
 .featuredImageWrap {
@@ -695,6 +745,17 @@
   background: rgba(255, 255, 255, 0.25);
 }
 
+.page[data-theme="light"] .featuredBoard {
+  background:
+    linear-gradient(145deg, rgba(37, 99, 235, 0.08) 0%, transparent 50%),
+    linear-gradient(320deg, rgba(124, 58, 237, 0.1) 0%, transparent 45%),
+    rgba(255, 255, 255, 0.72);
+  border-color: rgba(15, 23, 42, 0.15);
+  box-shadow:
+    0 0 0 1px rgba(15, 23, 42, 0.05) inset,
+    0 24px 48px rgba(15, 23, 42, 0.12);
+}
+
 .featuredCardBlock .featuredBoard {
   margin-top: 0;
   border-radius: 0;
@@ -743,11 +804,11 @@
 }
 
 .imdbSection {
-  margin-top: 1rem;
+  margin-top: 1.25rem;
   border-radius: 16px;
   border: 1px solid var(--ios-border);
   padding: 1.25rem 1.35rem;
-  background: rgba(15, 12, 28, 0.85);
+  background: rgba(10, 8, 22, 0.72);
   backdrop-filter: blur(12px);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
@@ -758,13 +819,14 @@
 }
 
 .page[data-theme="light"] .imdbSection {
-  background: rgba(255, 255, 255, 0.75);
+  background: rgba(255, 252, 235, 0.82);
 }
 
 .imdbSectionTitle {
   margin: 0 0 1rem;
-  font-size: 1.1rem;
+  font-size: 1.15rem;
   font-weight: 700;
+  letter-spacing: -0.01em;
   color: var(--text);
   padding-bottom: 0.6rem;
   border-bottom: 1px solid var(--ios-border);
@@ -871,7 +933,7 @@
 }
 
 .actorsSection {
-  margin-top: 1rem;
+  margin-top: 1.25rem;
   padding: 1.25rem 1.35rem;
   border-radius: 16px;
   border: 1px solid var(--ios-border);
@@ -952,7 +1014,7 @@
 }
 
 .newsSection {
-  margin-top: 1rem;
+  margin-top: 1.25rem;
   padding: 1.25rem 1.35rem;
   border-radius: 16px;
   border: 1px solid var(--ios-border);
@@ -1230,7 +1292,7 @@
   }
 
   .featuredBoard {
-    grid-template-columns: 1.05fr 0.95fr;
+    grid-template-columns: 1fr 1.1fr;
     align-items: stretch;
   }
 
@@ -1239,11 +1301,11 @@
   }
 
   .featuredImageWrap {
-    min-height: 320px;
+    min-height: 360px;
   }
 
   .featuredImageWrap .imageTrigger {
-    min-height: 320px;
+    min-height: 360px;
   }
 
   .presentationSection {
@@ -1277,7 +1339,7 @@
 
 /* Footer estilo Netflix/IMDb */
 .footer {
-  margin-top: 2.5rem;
+  margin-top: 3rem;
   padding: 2rem 1.5rem 1.5rem;
   background: rgba(0, 0, 0, 0.45);
   border-top: 1px solid var(--ios-border);

@@ -1,8 +1,10 @@
 .page {
-  --ios-glass: rgba(255, 255, 255, 0.14);
-  --ios-border: rgba(255, 255, 255, 0.3);
+  --ios-glass: rgba(255, 255, 255, 0.10);
+  --ios-border: rgba(255, 255, 255, 0.22);
   --hbo-violet: #7c3aed;
   --hbo-blue: #2563eb;
+  --hbo-teal: #0d9488;
+  --hbo-teal-glow: rgba(13, 148, 136, 0.35);
   --surface: rgba(10, 12, 28, 0.7);
   --text: #eef2ff;
   --muted: #c7d2fe;
@@ -13,7 +15,7 @@
   --text: #111827;
   --muted: #475569;
   --ios-glass: rgba(255, 255, 255, 0.6);
-  --ios-border: rgba(15, 23, 42, 0.2);
+  --ios-border: rgba(15, 23, 42, 0.28);
 }
 
 .page {
@@ -61,7 +63,7 @@
   z-index: 1;
   width: min(1180px, 94%);
   margin: 0 auto;
-  padding: 1.2rem 0 2.4rem;
+  padding: 1.5rem 0 3rem;
 }
 
 .backLink {
@@ -134,6 +136,7 @@
   margin: 0 0 1.25rem;
   font-size: clamp(1.6rem, 4vw, 2.2rem);
   font-weight: 800;
+  letter-spacing: -0.02em;
   color: var(--text);
 }
 
@@ -145,6 +148,7 @@
   margin: 0 0 0.75rem;
   font-size: 1.15rem;
   font-weight: 700;
+  letter-spacing: -0.01em;
   color: var(--text);
   padding-bottom: 0.4rem;
   border-bottom: 1px solid var(--ios-border);
@@ -152,7 +156,7 @@
 
 .cardsGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   gap: 1rem;
 }
 
@@ -165,18 +169,28 @@
   backdrop-filter: blur(12px);
   text-decoration: none;
   color: inherit;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-  animation: fadeIn 0.45s ease-out forwards;
+  transition: transform 0.32s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.28s ease;
+  animation: fadeIn 0.45s ease-out both;
 }
 
 .card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  transform: translateY(-6px) scale(1.015);
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.38), 0 0 0 1px rgba(124, 58, 237, 0.25) inset;
 }
+
+.card:nth-child(1) { animation-delay: 0.04s; }
+.card:nth-child(2) { animation-delay: 0.10s; }
+.card:nth-child(3) { animation-delay: 0.16s; }
+.card:nth-child(4) { animation-delay: 0.22s; }
+.card:nth-child(5) { animation-delay: 0.28s; }
+.card:nth-child(6) { animation-delay: 0.34s; }
+.card:nth-child(7) { animation-delay: 0.40s; }
+.card:nth-child(8) { animation-delay: 0.46s; }
+.card:nth-child(n+9) { animation-delay: 0.52s; }
 
 .cardPoster {
   width: 100%;
-  aspect-ratio: 16 / 10;
+  aspect-ratio: 16 / 11;
   object-fit: cover;
 }
 
@@ -186,6 +200,8 @@
 
 .cardBadge {
   display: inline-block;
+  position: relative;
+  overflow: hidden;
   margin-bottom: 0.4rem;
   padding: 0.22rem 0.55rem;
   border-radius: 999px;
@@ -194,6 +210,23 @@
   text-transform: uppercase;
   background: linear-gradient(135deg, var(--hbo-blue), var(--hbo-violet));
   color: #f8fafc;
+}
+
+.cardBadge::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(105deg, transparent 20%, rgba(255, 255, 255, 0.35) 50%, transparent 80%);
+  animation: badgeShimmer 3.5s ease-in-out infinite 1s;
+}
+
+@keyframes badgeShimmer {
+  0%  { left: -100%; }
+  35% { left: 140%; }
+  100%{ left: 140%; }
 }
 
 .cardTitle {
@@ -267,7 +300,7 @@
   background: var(--surface);
   color: var(--text);
   box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
-  animation: modalIn 0.3s ease-out;
+  animation: modalIn 0.38s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .page[data-theme="light"] .modalContent {
@@ -277,7 +310,7 @@
 }
 
 @keyframes modalIn {
-  from { opacity: 0; transform: scale(0.96) translateY(12px); }
+  from { opacity: 0; transform: scale(0.93) translateY(20px); }
   to { opacity: 1; transform: scale(1) translateY(0); }
 }
 
@@ -434,7 +467,7 @@
 .modalSynopsis {
   margin: 0 0 0.75rem;
   font-size: 0.88rem;
-  line-height: 1.5;
+  line-height: 1.65;
   color: var(--muted);
 }
 
@@ -581,7 +614,7 @@
 .modalPlot p {
   margin: 0;
   font-size: 0.88rem;
-  line-height: 1.5;
+  line-height: 1.65;
   color: var(--text);
 }
 
@@ -605,7 +638,7 @@
 
 .modalActorsGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
   gap: 0.75rem;
 }
 
